@@ -13,7 +13,9 @@ import frc.robot.commands.PneumaticsCommand;
 public class PneumaticSub extends SubsystemBase {
 
   private final DoubleSolenoid TestSol = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 4,5);
-
+  //McT added
+  private boolean isForward = true;
+  //end McT added
   /** Creates a new PneumaticSub. */
   public PneumaticSub() {}
 
@@ -22,7 +24,16 @@ public class PneumaticSub extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  
+  //McT added
+  public void setSolenoid(){
+    if(this.isForward){
+      TestSol.set(Value.kReverse);
+    }else{
+      TestSol.set(Value.kForward);
+    }
+    this.isForward = !(this.isForward);
+  }
+  //end McT added
 
   public void SetSolForward() {
 
