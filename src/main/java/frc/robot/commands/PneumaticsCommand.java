@@ -13,7 +13,7 @@ import frc.robot.subsystems.PneumaticSub;
 public class PneumaticsCommand extends CommandBase {
 
   private final PneumaticSub pneumaticsub;
-
+  private boolean isDone = false;
 
   /** Creates a new PneumaticsCommand. */
   public PneumaticsCommand(PneumaticSub pt) {
@@ -24,18 +24,26 @@ public class PneumaticsCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    //McT added
+    //running the pneumatics solenoid
+    this.pneumaticsub.setSolenoid();
+    this.isDone = true;
+    //end McT added
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    //Mct - don't need this.  I put it in initialize
+    /*
     if ( DRIVER PRESSES THE A BUTTON) {
       pneumaticsub.SetSolForward();
     }
     if ( DRIVER PRESSES THE B BUTTON) {
       pneumaticsub.SetSolReverse();
     }
+    */
     
 
   }
@@ -47,6 +55,8 @@ public class PneumaticsCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    //McT added
+    return this.isDone;
+    //end McT added
   }
 }
