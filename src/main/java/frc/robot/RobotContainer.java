@@ -13,6 +13,8 @@ import frc.robot.commands.DriveForwardTimed;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.PneumaticsCommand;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.PneumaticSub;//McT added
+//McT note - I usually import import frc.robot.subsystems.*; and frc.robot.commands.* so I don't have to add each one manually.
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,6 +29,10 @@ public class RobotContainer {
   private final DriveTrain driveTrain;
   private final DriveWithJoysticks driveWithJoysticks;
   private final DriveForwardTimed driveForardTimed;
+  
+  //McT added
+  private final PneumaticSub pneumaticSub = new PneumaticSub();
+  //end McT added - you need to import your subsystems.
 
   public static XboxController driverJoystick;
 
@@ -46,9 +52,17 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+    //McT edited
     JoystickButton DriverAButton = new JoystickButton(driverJoystick, Constants.XBOX_A_BUTTON);
-    JoystickButton DriverBButton = new JoystickButton(driverJoystick, Constants.XBOX_B_BUTTON);
-
+//    JoystickButton DriverBButton = new JoystickButton(driverJoystick, Constants.XBOX_B_BUTTON);
+    //We only need one button - each time we press it the solenoid will switch direction.
+    //end McT edited.
+    //McT added
+    DriverAButton.whenPressed(new PneumaticsCommand(pneumaticSub));
+    //Note - whenPressed, whenReleased, whileHeld allow you to schedule different commands based on what you want.
+    //Since we are simply changing the solenoid direction whenPressed is the best option.
+    //If you wanted to run an intake motor whild you held a button down then whileHeld would be the best option.
+    //end McT added
   }
 
   /**
